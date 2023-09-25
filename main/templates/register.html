@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block meta %}
+    <title>Register</title>
+{% endblock meta %}
+
+{% block content %}
+
+<div class="container-fluid">
+    <div class="row align-items-center justify-content-center vh-100">
+        <div class="col-md-6">
+            <div class="login">
+                <h1>Register</h1>
+
+                <form method="POST">
+                    {% csrf_token %}
+                    <table class="table">
+                        {{ form.as_table }}
+                        <tr>
+                            <td></td>
+                            <td><button type="submit" class="btn btn-primary">Daftar</button></td>
+                        </tr>
+                    </table>
+                </form>
+
+                {% if messages %}
+                    <ul class="list-unstyled">
+                        {% for message in messages %}
+                            <li class="text-danger">{{ message }}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}
