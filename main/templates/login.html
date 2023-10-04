@@ -1,42 +1,91 @@
-{% extends 'base.html' %}
+{% extends 'base.html' %} {% block meta %}
+<title>Login</title>
+<style>
+  input:-webkit-autofill,
+  input:-webkit-autofill:focus {
+    box-shadow: 0 0 0 1000px #94a3b8 inset;
+    -webkit-text-fill-color: #000000;
+  }
+</style>
+{% endblock meta %} {% block content %}
 
-{% block meta %}
-    <title>Login</title>
-{% endblock meta %}
-
-{% block content %}
-
-<div class="container">
-    <div class="row justify-content-center vh-100 align-items-center">
-        <div class="col-md-6">
-            <div class="login">
-                <h1>Login</h1>
-
-                <form method="POST" action="">
-                    {% csrf_token %}
-                    <div class="form-group">
-                        <label for="username">Username:</label>
-                        <input type="text" name="username" id="username" class="form-control" placeholder="Username">
-                    </div>
-                    <div class="form-group">
-                        <label for="password">Password:</label>
-                        <input type="password" name="password" id="password" class="form-control" placeholder="Password">
-                    </div>
-                    <button class="btn btn-primary login_btn" type="submit">Login</button>
-                </form>
-
-                {% if messages %}
-                    <ul class="list-unstyled">
-                        {% for message in messages %}
-                            <li class="text-danger">{{ message }}</li>
-                        {% endfor %}
-                    </ul>
-                {% endif %}
-
-                <p>Don't have an account yet? <a href="{% url 'main:register' %}">Register Now</a></p>
-            </div>
+<div class="flex flex-col justify-center items-center h-screen">
+  <div class="container">
+    <!-- <div class="w-full px-5"> -->
+    <div class="w-1/2 mx-auto py-5 rounded-md shadow-2xl bg-secondary">
+      <div class="w-full px-4">
+        <div class="text-center max-w-xl mx-auto">
+          <h1 class="text-4xl text-slate-300 mb-4 font-bold">
+            Your Reading List
+          </h1>
+          <p class="text-slate-200 text-base font-semibold">
+            “The more that you read, the more things you will know. The more
+            that you learn, the more places you’ll go.”
+          </p>
+          <p class="text-slate-200 text-md font-bold">
+            ― Dr. Seuss, I Can Read With My Eyes Shut! ―
+          </p>
         </div>
-    </div>
+      </div>
+      <hr class="mx-4 my-2 text-slate-200">
+
+      <form method="POST" action="" autocomplete="nope" id="myForm">
+        <!-- <input autocomplete="false" name="hidden" type="text" style="display:none;"> -->
+        {% csrf_token %}
+        <div class="w-full lg:w-2/3 lg:mx-auto max-w-lg">
+          <div class="px-4 mb-8">
+            <label for="username" class="text-slate-200">USERNAME</label>
+            <input
+              type="text"
+              name="username"
+              id="username"
+              placeholder="Username"
+              autocomplete="nope"
+              aria-autocomplete="none"
+              class="w-full bg-slate-400 p-3 rounded-md focus:outline-none focus:ring-amber-400 focus:ring-1 focus:border-amber-400 active:bg-slate-500"
+            />
+          </div>
+          <div class="px-4 mb-8">
+            <label for="password" class="text-slate-200">PASSWORD</label>
+            <input
+              type="password"
+              name="password"
+              id="password"
+              placeholder="Password"
+              autocomplete="nope"
+              aria-autocomplete="none"
+              class="w-full bg-slate-400 p-3 rounded-md focus:outline-none focus:ring-amber-400 focus:ring-1 focus:border-amber-400"
+            />
+          </div>
+          <div class="px-4">
+            <button
+              type="submit"
+              class="w-full bg-amber-400 py-3 mb-4 rounded-full font-semibold"
+            >
+              LOGIN
+            </button>
+          </div>
+        </div>
+      </form>
+
+      {% if messages %}
+      <ul>
+        {% for message in messages %}
+        <li>{{ message }}</li>
+        {% endfor %}
+      </ul>
+      {% endif %}
+      <div class="">
+        <p class="text-md text-center text-slate-200">
+          Don't have an account yet?
+          <a href="{% url 'main:register' %}" class="text-amber-400"
+            >Register Now</a
+          >
+        </p>
+      </div>
+    </div>  
+  </div>
 </div>
 
+<script></script>
 {% endblock content %}

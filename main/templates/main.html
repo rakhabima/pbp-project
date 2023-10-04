@@ -1,8 +1,8 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <div class="container">
-        <h1 class="mt-5">My Reading List</h1>
+    <div class="container text-slate-200 text-center">
+        <h1 class="mt-5 mb-12 text-4xl font-semibold">MY READING LIST</h1>
 <!-- 
         <div class="row mt-3">
             <div class="col-md-4">
@@ -19,42 +19,42 @@
             </div>
         </div> -->
 
-        <table class="table mt-4">
+        <table>
             <thead>
-                <tr>
-                    <th>Book Name</th>
-                    <th>Author</th>
-                    <th>Total Pages</th>
-                    <th>Date Published</th>
-                    <th>Description</th>
-                    <th>Date Added</th>
+                <tr class="border-2 border-slate-300">
+                    <th class="border-1 border-slate-200">Book Name</th>
+                    <th class="border-1 border-slate-200">Author</th>
+                    <th class="border-1 border-slate-200">Total Pages</th>
+                    <th class="border-1 border-slate-200">Date Published</th>
+                    <th class="border-1 border-slate-200">Description</th>
+                    <th class="border-1 border-slate-200">Date Added</th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody class="border-2 border-slate-300">
                 {% for product in products %}
-                    <tr>
-                        <td>{{ product.book_name }}</td>
-                        <td>{{ product.author }}</td>
-                        <td>{{ product.total_pages }}</td>
-                        <td>{{ product.date_published }}</td>
-                        <td>{{ product.description }}</td>
-                        <td>{{ product.date_added }}</td>
+                    <tr class="border-1 border-slate-200">
+                        <td class="border-1 border-slate-200">{{ product.book_name }}</td>
+                        <td class="border-1 border-slate-200">{{ product.author }}</td>
+                        <td class="border-1 border-slate-200">{{ product.total_pages }}</td>
+                        <td class="border-1 border-slate-200">{{ product.date_published }}</td>
+                        <td class="border-1 border-slate-200">{{ product.description }}</td>
+                        <td class="border-1 border-slate-200">{{ product.date_added }}</td>
                     </tr>
                 {% endfor %}
             </tbody>
         </table>
 
-        <div class="mt-4">
-            <a href="{% url 'main:create_product' %}" class="btn btn-primary">
-                Add New Product
+        <div class="mt-12 mx-auto w-1/2">
+            <a href="{% url 'main:create_product' %}" class="w-full bg-amber-400 px-8 py-3 rounded-md hover:opacity-80 hover:shadow-lg transition duration-500 text-slate-800 font-semibold">
+                ADD NEW PRODUCT
             </a>
         </div>
 
-        <div class="mt-4">
-            <h5>Sesi terakhir login: {{ last_login }}</h5>
-            <a href="{% url 'main:logout' %}" class="btn btn-danger">
+        <div class="mt-12 mx-auto mb-12 w-1/2">
+            <a href="{% url 'main:logout' %}" class="w-full bg-amber-400 px-8 py-3 rounded-md hover:opacity-80 hover:shadow-lg transition duration-500 text-slate-800 font-semibold">
                 Logout
             </a>
         </div>
+        <h5>Sesi terakhir login: {{ last_login }}</h5>
     </div>
 {% endblock content %}

@@ -275,11 +275,11 @@
 1. Apa itu Django UserCreationForm, dan jelaskan apa kelebihan dan kekurangannya?
    - Django UserCreationForm adalah fitur built-in django yang berfungsi untuk membuat sebuah form yang digunakan untuk membuat pengguna baru di Django. Form ini merupakan subclass dari ModelForm dan menggunakan model User sebagai model datanya. Form ini juga telah menerapkan validasi untuk memastikan bahwa username dan password yang dimasukkan valid.
    - Kelebihan UserCreationForm, yaitu:
-      - Mudah digunakan: Form ini memiliki tiga field yang sederhana dan mudah dipahami.
-      - Validasi: Form ini telah menerapkan validasi untuk memastikan bahwa username dan password yang dimasukkan valid.
-   -Kekurangan UserCreationForm, yaitu:
-      - Tidak dapat menambahkan field tambahan: Form ini tidak dapat menambahkan field tambahan selain username, password1, dan password2.
-      - Tidak dapat mengubah model User: Form ini tidak dapat mengubah model User yang digunakan.
+     - Mudah digunakan: Form ini memiliki tiga field yang sederhana dan mudah dipahami.
+     - Validasi: Form ini telah menerapkan validasi untuk memastikan bahwa username dan password yang dimasukkan valid.
+       -Kekurangan UserCreationForm, yaitu:
+     - Tidak dapat menambahkan field tambahan: Form ini tidak dapat menambahkan field tambahan selain username, password1, dan password2.
+     - Tidak dapat mengubah model User: Form ini tidak dapat mengubah model User yang digunakan.
 2. Apa perbedaan antara autentikasi dan otorisasi dalam konteks Django, dan mengapa keduanya penting?
    - Autentikasi dan otorisasi adalah dua konsep yang penting dalam keamanan web. Autentikasi adalah proses mengidentifikasi pengguna, sedangkan otorisasi adalah proses menentukan apakah pengguna memiliki izin untuk mengakses sumber daya tertentu.
    - Dalam django, autentikasi dilakukan dengan model `User`. Model ini menyimpan informasi tentang pengguna, seperti username, password, dan email. Autentikasi dilakukan dengan membandingkan username dan password yang dimasukkan pengguna dengan informasi yang disimpan di model User.
@@ -291,6 +291,7 @@
 4. Apakah penggunaan cookies aman secara default dalam pengembangan web, atau apakah ada risiko potensial yang harus diwaspadai?
    - Penggunaan cookie tidak aman secara default dalam pengembangan web. Cookie dapat digunakan untuk menyimpan informasi sensitif, seperti token login pengguna. Jika cookie ini dicuri, maka pengguna yang tidak sah dapat menggunakan cookie untuk login ke aplikasi. Oleh karena itu, cookie harus dienkripsi sebelum dikirim ke browser pengguna. Django menggunakan cookie untuk menyimpan ID sesi pengguna. ID sesi ini digunakan untuk mengidentifikasi sesi pengguna saat ini. Django juga menggunakan cookie untuk menyimpan token login pengguna. Token login ini digunakan untuk memverifikasi bahwa pengguna yang saat ini login adalah pengguna yang sah.
 5. Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-by-step (bukan hanya sekadar mengikuti tutorial).
+
    - Pertama-tama membuat fungsi baru di file `views.py` dengan nama `register` yang berisi form untuk membuat user baru
 
    ```
@@ -351,6 +352,7 @@
    ```
 
    - Lalu menambahkan path url ke dalam `urlpatterns` di file `urls.py` di folder `main`
+
    ```
    path('register', register, name='register'),
    ```
@@ -365,7 +367,7 @@
         user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)
-            response = HttpResponseRedirect(reverse("main:show_main")) 
+            response = HttpResponseRedirect(reverse("main:show_main"))
             response.set_cookie('last_login', str(datetime.datetime.now()))
             return response
         else:
@@ -422,6 +424,7 @@
    ```
 
    - Lalu menambahkan path url ke dalam `urlpatterns` di file `urls.py` di folder `main`
+
    ```
    path('login', login_user, name='login'),
    ```
@@ -434,14 +437,16 @@
     response = HttpResponseRedirect(reverse('main:login'))
     response.delete_cookie('last_login')
     return response
-    ```
+   ```
 
    - Lalu menambahkan path url ke dalam `urlpatterns` di file `urls.py` di folder `main`
+
    ```
    path('logout', logout_user, name='logout'),
    ```
 
    - Selanjutnya membuat fungsi `show_main` hanya untuk yang sudah login
+
    ```
    @login_required(login_url='/login')
    def show_main(request):
@@ -456,7 +461,7 @@
    ```
    if user is not None:
     login(request, user)
-    response = HttpResponseRedirect(reverse("main:show_main")) 
+    response = HttpResponseRedirect(reverse("main:show_main"))
     response.set_cookie('last_login', str(datetime.datetime.now()))
     return response
    ```
@@ -470,15 +475,17 @@
    ```
 
    - Mengubah fungsi `logout_user`
-   
-      ```
-      def logout_user(request):
-      logout(request)
-      response = HttpResponseRedirect(reverse('main:login'))
-      response.delete_cookie('last_login')
-      return response
-      ```
+
+     ```
+     def logout_user(request):
+     logout(request)
+     response = HttpResponseRedirect(reverse('main:login'))
+     response.delete_cookie('last_login')
+     return response
+     ```
+
    - Menampilkan data `last_login` pada file `main.html`
+
    ```
    ...
    <h5>Sesi terakhir login: {{ last_login }}</h5>
@@ -486,11 +493,13 @@
    ```
 
    - Untuk menghubungkan `item` dengan `user` maka perlu menambahkan field `user` pada model `Book` dengan tipe data `ForeignKey` yang menghubungkan ke model `User` yang sudah ada di django
+
    ```
    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
    ```
 
    - Selanjutnya mengubah fungsi `create_product` pada `views.py` dengan menambahkan `request.user` pada `product.save()`
+
    ```
    if form.is_valid() and request.method == "POST":
         product = form.save(commit=False)
@@ -500,6 +509,7 @@
    ```
 
    - Setelah itu menambahkan `name` pada context fungsi `show_main`
+
    ```
    context = {
         'name': request.user.username,
@@ -507,4 +517,151 @@
    ```
 
    - Melakukan migrasi model
-   
+
+# TUGAS 5
+
+1.  Jelaskan manfaat dari setiap element selector dan kapan waktu yang tepat untuk menggunakannya.
+
+- Element selector digunakan untuk memilih elemen HTML berdasarkan nama elemen, ID, class, dan atribut.
+  1. Element selector, memilih elemen HTML sesuai dengan nama elemen tersebut. Tepat digunakan ketika ingin mengganti style keseluruhan elemen tersebut dalam file. Contohnya mengganti semua elemen paragraf menjadi warna biru
+  ```
+       p {
+          color: blue;
+       }
+  ```
+  2. ID selector, memilih elemen HTML sesuai dengan id dari elemen yang ingin dipilih. ID bersifat unik dalam satu halaman web. Tepat digunakan ketika ingin mengganti style elemen tertentu dalam file. Contohnya mengganti elemen dengan id `header` menjadi warna merah
+  ```
+        #header {
+           color: red;
+        }
+  ```
+  3. Class selector, memilih elemen HTML sesuai dengan class dari elemen yang ingin dipilih. Class bersifat tidak unik dalam satu halaman web. Tepat digunakan ketika ingin mengganti style elemen tertentu dalam file. Contohnya mengganti elemen dengan class `paragraph` menjadi warna hijau
+  ```
+        .paragraph {
+           color: green;
+        }
+  ```
+  4. Attribute selector, memilih elemen HTML sesuai dengan atribut dari elemen yang ingin dipilih. Tepat digunakan ketika ingin mengganti style elemen tertentu dalam file. Contohnya mengganti elemen dengan atribut `href` menjadi warna kuning
+  ```
+        a[href] {
+           color: yellow;
+        }
+  ```
+  5. Pseudo-class, memilih elemen HTML sesuai dengan keadaan elemen tersebut. Tepat digunakan ketika ingin mengganti style elemen tertentu dalam file. Contohnya mengganti elemen dengan class `paragraph` menjadi warna hijau ketika elemen tersebut dihover
+  ```
+        .paragraph:hover {
+           color: green;
+        }
+  ```
+  6. Universal selector, memilih semua elemen HTML. Tepat digunakan ketika ingin mengganti style semua elemen dalam file. Contohnya mengganti background keseluruhan web menjadi warna merah
+  ```
+        * {
+           background-color: red;
+        }
+  ```
+
+2.  Jelaskan HTML5 Tag yang kamu ketahui.
+
+- `<!DOCTYPE HTML>` tag untuk mendeklarasikan sebuah file HTML5.
+- `<head>` tag ini digunakan untuk menunjukkan bagian head dari sebuah dokumen. tag ini berisi informasi yang tidak ditampilkan secara langsung kepada user.
+- `<body>` tag ini berisi bagian body dari dokumen. tag ini berisi informasi yang ditampilkan kepada user.
+- `<div>` tag ini digunakan untuk memisahkan bagian dari bagian lainnya.
+- `<p>` tag ini digunakan untuk menunjukkan sebuah paragraf.
+- `<a>` tag ini digunakan untuk menunjukkan link.
+- `<img>` tag ini digunakan untuk menunjukkan gambar.
+- `<ul>` tag ini digunakan untuk membuat list yang tidak berurutan.
+- `<ol>` tag ini digunakan untuk membuat list yang berurutan.
+- `<li>` tag ini berisi item dari sebuah list.
+- `<table>` ini digunakan untuk membuat sebuah tabel.
+- `<tr>` ini digunakan untuk menunjukkan baris dari tabel.
+- `<td>` ini digunakan untuk menunjukkan kolom dari tabel.
+- `<th>` tag ini digunakan untuk menunjukkan header dari tabel.
+- `<form>` tag ini digunakan untuk membuat sebuah form.
+- `<input>` tag ini digunakan untuk mendapatkan input dari form.
+- `<button>` tag yang digunakan untuk menunjukkan button.
+- `<label>` tag yang digunakan untuk menunjukkan label.
+- `<select>` tag yang digunakan untuk menunjukkan dropdown.
+- `<option>` tag yang digunakan untuk menunjukkan pilihan dari dropdown.
+- `<textarea>` tag yang digunakan untuk menunjukkan text area.
+
+3. Jelaskan perbedaan antara margin dan padding.
+
+   - Margin dan Padding adalah dua properti CSS yang digunakan untuk mengontrol jarak atau ruang di sekitar elemen HTML. Meskipun keduanya digunakan untuk mengatur jarak, mereka memiliki perbedaan dalam cara kerjanya:
+   - Margin adalah ruang di luar elemen. Ini adalah ruang antara elemen dan elemen lain di sekitarnya. Jika Anda ingin elemen berjarak lebih jauh dari elemen lain, tingkatkan properti margin. Margin juga bisa memiliki nilai negatif, yang memungkinkan elemen untuk saling tumpang tindih.
+   - Padding adalah ruang di dalam elemen. Ini adalah ruang antara elemen dan kontennya. Padding mengambil warna latar belakang elemen, yang berarti jika Anda menambahkan warna latar belakang ke elemen, padding akan terlihat.
+
+4. Jelaskan perbedaan antara framework CSS Tailwind dan Bootstrap. Kapan sebaiknya kita menggunakan Bootstrap daripada Tailwind, dan sebaliknya?
+
+   - Bootstrap adalah framework CSS yang paling banyak digunakan, Bootstrap menyediakan komponen yang telah ditentukan sebelumnya seperti navigasi, modals, drop-downs, dan lainnya. Bootstrap dirancang untuk membantu pengembang merancang tampilan yang responsif dengan cepat menggunakan kelas yang sudah ada. Bootstrap juga menyertakan JavaScript dan jQuery plugins untuk menambahkan fungsi seperti animasi.
+   - Jika ingin membuat tampilan web yang responsif dengan cepat dan tidak memerlukan banyak kustomisasi bisa menggunakan Bootstrap. Bootstrap juga bagus untuk proyek-proyek yang memerlukan banyak komponen interaktif, seperti modals dan drop-downs, karena plugin JavaScript dan jQuery yang disertakan
+   - Tailwind adalah framework CSS dengan pendekatan utility-first yang memberikan lebih banyak fleksibilitas dan kontrol kepada pengembang. Daripada menyediakan komponen yang telah ditentukan sebelumnya, Tailwind CSS menyediakan kelas utilitas rendah yang dapat digunakan untuk membangun desain yang unik. Sehingga pengembang dapat membuat tampilan yang benar-benar kustom tanpa harus menulis banyak kode CSS.
+   - Tailwind sangat tepat digunakan jika ingin memiliki kontrol lebih besar atas desain tampilan web dan tidak keberatan membangun komponen tampilan web itu sendiri. Tailwind sangat berguna untuk proyek-proyek yang memerlukan tampilan yang sangat kustom atau unik, karena fleksibilitas yang ditawarkan oleh tailwindcss
+
+5. Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-by-step (bukan hanya sekadar mengikuti tutorial).
+   - Menginstall `django-tailwind` dari `pip`
+   ```
+   python -m pip install django-tailwind
+   ```
+   atau
+   ```
+   python -m pip install django-tailwind[reload]
+   ```
+   jika ingin auto-reload ketika ada perubahan dalam tailwind
+   - Menambahkan `tailwind` ke `INSTALLED_APPS` pada file `settings.py`
+   - Membuat aplikasi tailwind untuk django dengan nama theme(sesuai default)
+   ```
+   python manage.py tailwind init
+   ```
+   - Membuat variabel yang menyimpan aplikasi tailwind
+   ```
+   TAILWIND_APP_NAME = 'theme'
+   ```
+   - Membuat variable untuk menyimpan IP di `settings.py`
+   ```
+   INTERNAL_IPS = [
+      "127.0.0.1",
+   ]
+   ```
+   - Menginstall Tailwind CSS Dependencies
+   ```
+   python manage.py tailwind install
+   ```
+   - Dalam aplikasi tailwind sudah terdapat file `base.html` di dalam folder `templates`. Tetapi jika tidak menggunakan file `base.html` tersebut, bisa menambahkan {% tailwind_css %} pada base.html yang sudah dibuat sebelumnya
+   ```
+   {% load static tailwind_tags %}
+   ...
+   <head>
+   ...
+   {% tailwind_css %}
+   ...
+   </head>
+   ```
+   - Mengkonfigurasikan `django_browser_reload` kepada project django dengan menambahkannya di `settings.py`
+   ```
+   INSTALLED_APPS = [
+   # other Django apps
+   'tailwind',
+   'theme',
+   'django_browser_reload'
+   ]
+   ```
+   - Menambahkan middleware `django_browser_reload` di `settings.py`
+   ```
+      MIDDLEWARE = [
+   # ...
+   "django_browser_reload.middleware.BrowserReloadMiddleware",
+   # ...
+   ]
+   ```
+   - Lalu menambahkan URL `django_browser_reload` ke `urls.py` di folder root
+   ```
+   from django.urls import include, path
+   urlpatterns = [
+      ...,
+      path("__reload__/", include("django_browser_reload.urls")),
+   ]
+   ```
+   - Setelah itu menjalankan tailwind dan mulai melakukan kustomisasi tampilan
+   ```
+   python manage.py tailwind start
+   ```
