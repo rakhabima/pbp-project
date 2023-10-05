@@ -7,7 +7,7 @@
     <div class="w-1/2 mx-auto py-5 rounded-md shadow-2xl bg-secondary text-center">
       <h1 class="text-slate-300 text-4xl font-semibold mb-5">Register</h1>
 
-      <form method="POST">
+      <!-- <form method="POST">
         {% csrf_token %}
         <table class="border-1 border-slate-200">
           {{ form.as_table }}
@@ -16,6 +16,25 @@
             <td><button type="submit" class="mt-5 bg-amber-400 py-3 px-12 rounded-md text-slate-800 mr-24">Daftar</button></td>
           </tr>
         </table>
+      </form> -->
+
+      <form method="POST">
+        {% csrf_token %}
+        <div>
+          <label for="username" class="block">Username</label>
+          {{ form.username }}
+        </div>
+        <div>
+          <label for="password1" class="block">Password</label>
+          {{ form.password1 }}
+        </div>
+        <div>
+          <label for="password2" class="block">Password Confirm</label>
+          {{ form.password2 }}
+        </div>
+        <div>
+          <button type="submit" class="mt-5 bg-amber-400 rounded-md text-slate-800 font-semibold">Register</button>
+        </div>
       </form>
 
       {% if messages %}

@@ -8,4 +8,5 @@ class Book(models.Model):
     date_added = models.DateField(auto_now_add=True)
     date_published = models.DateField(max_length=255)
     total_pages = models.IntegerField()
+    # times_readed = models.IntegerField()
     description = models.TextField()
