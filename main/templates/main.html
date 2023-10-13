@@ -1,9 +1,9 @@
-{% extends 'base.html' %}
-
-{% block content %}
-    <div class="container text-slate-200 text-center">
-        <h1 class="mt-5 mb-12 text-4xl font-semibold">MY READING LIST</h1>
-<!-- 
+{% extends 'base.html' %} {% block content %}
+<h1 class="mt-10 mb-12 text-4xl font-semibold text-slate-200 text-center">
+  MY READING LIST
+</h1>
+<div class="container text-slate-200 text-center">
+  <!-- 
         <div class="row mt-3">
             <div class="col-md-4">
                 <h5>Book Name:</h5>
@@ -19,13 +19,14 @@
             </div>
         </div> -->
 
-        <table>
+  <!-- <table>
             <thead>
                 <tr class="border-2 border-slate-300">
                     <th class="border-1 border-slate-200">Book Name</th>
                     <th class="border-1 border-slate-200">Author</th>
                     <th class="border-1 border-slate-200">Total Pages</th>
                     <th class="border-1 border-slate-200">Date Published</th>
+                    <th class="border-1 border-slate-200">Times Readed</th>
                     <th class="border-1 border-slate-200">Description</th>
                     <th class="border-1 border-slate-200">Date Added</th>
                 </tr>
@@ -37,24 +38,46 @@
                         <td class="border-1 border-slate-200">{{ product.author }}</td>
                         <td class="border-1 border-slate-200">{{ product.total_pages }}</td>
                         <td class="border-1 border-slate-200">{{ product.date_published }}</td>
+                        <td class="border-1 border-slate-200">{{ product.times_readed }}</td>
                         <td class="border-1 border-slate-200">{{ product.description }}</td>
                         <td class="border-1 border-slate-200">{{ product.date_added }}</td>
                     </tr>
                 {% endfor %}
             </tbody>
-        </table>
-
-        <div class="mt-12 mx-auto w-1/2">
-            <a href="{% url 'main:create_product' %}" class="w-full bg-amber-400 px-8 py-3 rounded-md hover:opacity-80 hover:shadow-lg transition duration-500 text-slate-800 font-semibold">
-                ADD NEW PRODUCT
-            </a>
-        </div>
-
-        <div class="mt-12 mx-auto mb-12 w-1/2">
-            <a href="{% url 'main:logout' %}" class="w-full bg-amber-400 px-8 py-3 rounded-md hover:opacity-80 hover:shadow-lg transition duration-500 text-slate-800 font-semibold">
-                Logout
-            </a>
-        </div>
-        <h5>Sesi terakhir login: {{ last_login }}</h5>
+        </table> -->
+  <div class="flex flex-wrap">
+    {% for product in products %}
+    <div class="w-full mx-auto md:w-1/2 lg:w-[30%] border-2 border-amber-400 rounded-md p-4 my-2">
+      <p class="font-bold text-lg uppercase">{{ product.book_name }}</p>
+      <hr class="my-1">
+      <p>by <span class="italic">{{ product.author }}</span></p>
+      <!-- <p>{{ product.total_pages }}</p> -->
+      <!-- <p>{{ product.date_published }}</p> -->
+      <p>{{ product.times_readed }} times readed</p>
+      <!-- <p>{{ product.description }}</p> -->
+      <!-- <p>{{ product.date_added }}</p> -->
     </div>
+    {% endfor %}
+  </div>
+
+  <div class="mt-12 mx-auto w-1/2">
+    <a
+      href="{% url 'main:create_product' %}"
+      class="w-full bg-amber-400 px-8 py-3 rounded-md hover:opacity-80 hover:shadow-lg transition duration-500 text-slate-800 font-semibold"
+    >
+      ADD NEW PRODUCT
+    </a>
+  </div>
+
+  <div class="mt-12 mx-auto mb-12 w-1/2">
+    <a
+      href="{% url 'main:logout' %}"
+      class="w-full bg-amber-400 px-8 py-3 rounded-md hover:opacity-80 hover:shadow-lg transition duration-500 text-slate-800 font-semibold"
+    >
+      Logout
+    </a>
+  </div>
+  <h5>Sesi terakhir login: {{ last_login }}</h5>
+</div>
+
 {% endblock content %}

@@ -1,9 +1,11 @@
 {% extends 'base.html' %} {% block content %}
-<div class="">
+<div class="flex flex-col justify-center items-center">
   <div class="container">
-    <h1 class="text-slate-300">Add New Product</h1>
+    <div class="max-w-3xl mx-auto py-5 text-center lg:rounded-lg lg:shadow-2xl lg:bg-secondary shadow-none my-12">
+    <h1 class="text-slate-300 text-4xl font-semibold mb-5">Add New Product</h1>
+    <hr class="mx-4 my-2 text-slate-200 font-semibold">
 
-    <form method="POST" class="text-slate-200">
+    <!-- <form method="POST" class="text-slate-200">
       {% csrf_token %}
       <div class="table-responsive">
         <table class="table">
@@ -16,7 +18,51 @@
           </tr>
         </table>
       </div>
-    </form>
+    </form> -->
+    {% load widget_tweaks%}
+    <form method="POST">
+      {% csrf_token %}
+      <div class="w-full mx-auto max-w-lg">
+      <div class="w-full mb-5">
+        <label for="{{ form.book_name.id_for_label }}" class="text-base font-semibold text-slate-200 block">Book Name</label>
+        {{ form.book_name|add_class:"w-full bg-slate-400 p-3 rounded-md focus:outline-none focus:ring-amber-400 focus:border-amber-400 active:bg-slate-400" }}
+      </div>
+      <div class="w-full mb-5">
+        <label for="{{ form.author.id_for_label }}" class="text-base font-semibold text-slate-200 block">Book Author</label>
+        {{ form.author|add_class:"w-full bg-slate-400 p-3 rounded-md focus:outline-none focus:ring-amber-400 focus:border-amber-400 active:bg-slate-400"|add_class:"w-full bg-slate-400 p-3 rounded-md focus:outline-none focus:ring-amber-400 focus:border-amber-400 active:bg-slate-400" }}
+      </div>
+      <div class="w-full mb-5">
+        <label for="{{ form.total_pages.id_for_label }}" class="text-base font-semibold text-slate-200 block">Total Pages</label>
+        {{ form.total_pages|add_class:"w-full bg-slate-400 p-3 rounded-md focus:outline-none focus:ring-amber-400 focus:border-amber-400 active:bg-slate-400" }}
+      </div>
+      <div class="w-full mb-5">
+        <label for="{{ form.date_published.id_for_label }}" class="text-base font-semibold text-slate-200 block">Date Published</label>
+        {{ form.date_published|add_class:"w-full bg-slate-400 p-3 rounded-md focus:outline-none focus:ring-amber-400 focus:border-amber-400 active:bg-slate-400" }}
+      </div>
+      <div class="w-full mb-5">
+        <label for="{{ form.times_readed.id_for_label }}" class="text-base font-semibold text-slate-200 block">Times Readed</label>
+        {{ form.times_readed|add_class:"w-full bg-slate-400 p-3 rounded-md focus:outline-none focus:ring-amber-400 focus:border-amber-400 active:bg-slate-400" }}
+      </div>
+      <div class="w-full mb-5">
+        <label for="{{ form.description.id_for_label }}" class="text-base font-semibold text-slate-200 block">Book Description</label>
+        {{ form.description|add_class:"w-full bg-slate-400 p-3 rounded-md focus:outline-none focus:ring-amber-400 focus:border-amber-400 active:bg-slate-400" }}
+      </div>
+      <div class="w-full mb-5">
+        <label for="{{ form.user.id_for_label }}" class="text-base font-semibold text-slate-200 block">user</label>
+        {{ form.user|add_class:"w-full bg-slate-400 p-3 rounded-md focus:outline-none focus:ring-amber-400 focus:border-amber-400 active:bg-slate-400" }}
+      </div>
+      <div class="w-full">
+        <button
+          type="submit"
+          class="w-full bg-amber-400 py-3 mb-4 rounded-full font-semibold"
+        >
+          Add Book
+        </button>
+      </div>
+    </div>
+  </form>
+    </div>
   </div>
 </div>
+
 {% endblock %}

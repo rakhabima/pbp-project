@@ -2,50 +2,64 @@
 <title>Register</title>
 {% endblock meta %} {% block content %}
 
-<div class="flex flex-col justify-center items-center h-screen text-slate-200">
+<div class="flex flex-col justify-center items-center h-screen">
   <div class="container">
-    <div class="w-1/2 mx-auto py-5 rounded-md shadow-2xl bg-secondary text-center">
+    <div
+      class="max-w-2xl mx-auto py-5 lg:rounded-lg lg:shadow-2xl lg:bg-secondary shadow-none bg-primary w-full text-center"
+    >
       <h1 class="text-slate-300 text-4xl font-semibold mb-5">Register</h1>
+      <hr class="mx-4 my-2 text-slate-200 font-semibold">
 
-      <!-- <form method="POST">
-        {% csrf_token %}
-        <table class="border-1 border-slate-200">
-          {{ form.as_table }}
-          <tr>
-            <td></td>
-            <td><button type="submit" class="mt-5 bg-amber-400 py-3 px-12 rounded-md text-slate-800 mr-24">Daftar</button></td>
-          </tr>
-        </table>
-      </form> -->
-
+      {% load widget_tweaks %}
       <form method="POST">
         {% csrf_token %}
-        <div>
-          <label for="username" class="block">Username</label>
-          {{ form.username }}
-        </div>
-        <div>
-          <label for="password1" class="block">Password</label>
-          {{ form.password1 }}
-        </div>
-        <div>
-          <label for="password2" class="block">Password Confirm</label>
-          {{ form.password2 }}
-        </div>
-        <div>
-          <button type="submit" class="mt-5 bg-amber-400 rounded-md text-slate-800 font-semibold">Register</button>
+        <div class="w-full mx-auto max-w-lg">
+          <div class="w-full mb-5">
+            <label for="username" class="text-base font-semibold text-slate-200 block" >Username</label>
+            <!-- <input type="text" name="username"> -->
+            {{ form.username|add_class:"w-full bg-slate-400 p-3 rounded-md focus:outline-none focus:ring-amber-400 focus:border-amber-400 active:bg-slate-400" }}
+          </div>
+          <div class="w-full mb-5">
+            <label for="password1" class="text-base text-slate-200 block" 
+              >Password</label
+            >
+            <!-- <input type="password" name="password1"> -->
+            {{ form.password1|add_class:"w-full bg-slate-400 p-3 rounded-md focus:outline-none focus:ring-amber-400 focus:border-amber-400 active:bg-slate-400" }}
+          </div>
+          <div class="w-full mb-8">
+            <label for="password2" class="text-base text-slate-200 block" 
+              >Password Confirm</label
+            >
+            <!-- <input type="password" name="password2"> -->
+            {{ form.password2|add_class:"w-full bg-slate-400 p-3 rounded-md focus:outline-none focus:ring-amber-400 focus:border-amber-400 active:bg-slate-400" }}
+          </div>
+          <div class="w-full">
+            <button
+              type="submit"
+              class="w-full bg-amber-400 py-3 mb-4 rounded-full font-semibold"
+            >
+              Register
+            </button>
+          </div>
         </div>
       </form>
 
       {% if messages %}
-      <ul class="list-unstyled">
+      <ul class="w-full my-2">
         {% for message in messages %}
-        <li class="text-danger">{{ message }}</li>
+        <li class="text-slate-200">{{ message }}</li>
+        <!-- <a href="#" class="text-amber-400 hover:underline">See Details</a> -->
         {% endfor %}
       </ul>
       {% endif %}
+
+      
+
+      <p class="text-slate-200">Already have an account? <a href="{% url 'main:login' %}" class="text-amber-400 hover:underline">Login here.</a></p>
     </div>
+    
   </div>
+  
 </div>
 
 {% endblock content %}
